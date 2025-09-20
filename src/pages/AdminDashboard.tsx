@@ -23,7 +23,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/analytics");
+        const res = await axios.get("https://saathi-website.onrender.com/api/analytics");
         console.log("Stats response:", res.data); // debug
         setDashboardStats(res.data);
       } catch (err) {
