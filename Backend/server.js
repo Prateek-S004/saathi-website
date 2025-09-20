@@ -9,7 +9,7 @@ import messageRoutes from "./routes/messagesRoutes.js";
 import communityRoutes from "./routes/communityRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import streakRoutes from "./routes/streakRoutes.js";
-import analyticsRoutes from "./routes/analyticsRoutes.js"; // ✅ new analytics routes
+import analyticsRoutes from "./routes/analyticsRoutes.js";
 
 dotenv.config();
 
@@ -23,15 +23,17 @@ app.use(express.json());
 // ------------------ MongoDB Connection ------------------ //
 const mongoURI = process.env.MONGODB_URI;
 
+// Connect to MongoDB
 mongoose
   .connect(mongoURI, {
-    dbName: "Saathi", // replace with your actual DB name
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // CORRECTED: dbName now matches your Atlas database name exactly.
+    dbName: "saathidatabase", 
+    // REMOVED: useNewUrlParser and useUnifiedTopology are deprecated and no longer needed.
   })
-  .then(() => console.log("✅ MongoDB connected successfully!"))
+  .then(() => console.log("✅ MongoDB connected successfully to saathidatabase!"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
+// Optional: Connection event listeners for debugging
 mongoose.connection.on("connected", () => {
   console.log("✅ MongoDB connection is OPEN");
 });
@@ -51,7 +53,7 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/community", communityRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/streaks", streakRoutes);
-app.use("/api/analytics", analyticsRoutes); // ✅ analytics endpoint
+app.use("/api/analytics", analyticsRoutes);
 
 // Test route
 app.get("/", (req, res) => {
