@@ -4,14 +4,25 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // Local development server configuration
   server: {
-    host: "::",
-    port: 8080,
+    host: "::", // allows access from local network
+    port: 8080,  // local dev port
   },
-  plugins: [react()].filter(Boolean),
+
+  // Plugins
+  plugins: [react()],
+
+  // Path aliases
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "./src"), // allows import "@/components/..." etc.
     },
+  },
+
+  // Preview server (used for production build preview / Render)
+  preview: {
+    // Allow the Render domain to access the preview server
+    allowedHosts: ["saathi-website.onrender.com"],
   },
 }));
