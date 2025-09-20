@@ -25,7 +25,7 @@ const mongoURI = process.env.MONGODB_URI;
 
 mongoose
   .connect(mongoURI, {
-    dbName: "saathiDatabase", // replace with your actual DB name
+    dbName: "Saathi", // replace with your actual DB name
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
