@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:5000/api', // Your backend's base URL
+  // ✅ CORRECTED: Replace with your live Render backend URL
+  baseURL: 'https://saathi.onrender.com/api', 
   headers: {
     'Content-Type': 'application/json',
   },
