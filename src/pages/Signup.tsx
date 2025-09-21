@@ -15,7 +15,7 @@ const Signup: React.FC = () => {
     setError("");
 
     try {
-      await axios.post("https://saathi-website.onrender.com/api/auth/signup", {
+      await axios.post("https://saathi-website-production.up.railway.app/api/auth/signup", {
         username,
         password,
         role,
