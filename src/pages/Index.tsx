@@ -17,8 +17,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import heroImage from "..hero-wellness.png";
-import goluImage from "..golu.gif";
+import heroImage from "../assets/hero-wellness.png";
+import goluImage from "../assets/golu.gif";
 
 const Index = () => {
     useEffect(() => {
