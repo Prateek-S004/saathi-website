@@ -1,3 +1,4 @@
+// server.js
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -16,38 +17,33 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());
+// ------------------ CORS Middleware ------------------ //
+// Allow only your Vercel frontend to access this backend
+app.use(
+  cors({
+    origin: 'https://saathi-website-blue.vercel.app', // Replace with your Vercel frontend URL
+    credentials: true, // Allow cookies and authentication headers
+  })
+);
+
 app.use(express.json());
 
 // ------------------ MongoDB Connection ------------------ //
 const mongoURI = process.env.MONGODB_URI;
 
-// Connect to MongoDB
 mongoose
   .connect(mongoURI, {
-    // CORRECTED: dbName now matches your Atlas database name exactly.
-    dbName: "saathidatabase", 
-    // REMOVED: useNewUrlParser and useUnifiedTopology are deprecated and no longer needed.
+    dbName: "saathidatabase", // Ensure this matches your Atlas DB
   })
   .then(() => console.log("✅ MongoDB connected successfully to saathidatabase!"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// Optional: Connection event listeners for debugging
-mongoose.connection.on("connected", () => {
-  console.log("✅ MongoDB connection is OPEN");
-});
+// Optional connection event listeners
+mongoose.connection.on("connected", () => console.log("✅ MongoDB connection is OPEN"));
+mongoose.connection.on("error", (err) => console.error("❌ MongoDB connection error:", err));
+mongoose.connection.on("disconnected", () => console.log("⚠️ MongoDB disconnected"));
 
-mongoose.connection.on("error", (err) => {
-  console.error("❌ MongoDB connection error:", err);
-});
-
-mongoose.connection.on("disconnected", () => {
-  console.log("⚠️ MongoDB disconnected");
-});
-// -------------------------------------------------------- //
-
-// API Routes
+// ------------------ API Routes ------------------ //
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/community", communityRoutes);
@@ -68,5 +64,5 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`⚡ Server running at http://localhost:${PORT}`);
+  console.log(`⚡ Server running on port ${PORT}`);
 });
