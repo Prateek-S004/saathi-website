@@ -1,10 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 
 const apiClient = axios.create({
-  // ✅ CORRECTED: Replace with your live Render backend URL
-  baseURL: 'https://saathi.onrender.com/api', 
+  baseURL: import.meta.env.VITE_API_URL || "https://saathi-website-production.up.railway.app/api",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
