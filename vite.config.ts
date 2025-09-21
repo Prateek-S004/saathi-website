@@ -4,10 +4,10 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // Local development server configuration
+  // Local dev server config
   server: {
-    host: "::", // allows access from local network
-    port: 8080,  // local dev port
+    host: "::",
+    port: 8080,
   },
 
   // Plugins
@@ -16,13 +16,17 @@ export default defineConfig(({ mode }) => ({
   // Path aliases
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"), // allows import "@/components/..." etc.
+      "@": path.resolve(__dirname, "./src"),
     },
   },
 
-  // Preview server (used for production build preview / Render)
+  // Build output (Vercel will serve this)
+  build: {
+    outDir: "dist", // default for Vercel
+  },
+
+  // Preview server (local preview after build)
   preview: {
-    // Allow the Render domain to access the preview server
     allowedHosts: ["saathi-website.onrender.com"],
   },
 }));
