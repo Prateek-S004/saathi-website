@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // ✅ Import the centralized apiClient
 import apiClient from "../api.js"; // Adjust path if needed
-import "../Auth.css";
+import "./Auth.css";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
