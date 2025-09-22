@@ -1,4 +1,3 @@
-// server.js
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -17,14 +16,29 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ------------------ CORS Middleware ------------------ //
-// Allow only your Vercel frontend to access this backend
-app.use(
-  cors({
-    origin: 'https://saathi-website.onrender.com', // Replace with your Vercel frontend URL
-    credentials: true, // Allow cookies and authentication headers
-  })
-);
+// ------------------ CORS Middleware (The Fix) ------------------ //
+// We define the exact URL of the frontend that is allowed to make requests.
+const allowedOrigins = ["https://saathi-website.onrender.com"];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    // The 'origin' is the URL of the site making the request (your frontend)
+    // We check if it's in our allowed list.
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      // If it is, allow the request.
+      callback(null, true);
+    } else {
+      // If it's not, block the request.
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // This allows cookies and authorization headers.
+};
+
+// Use the CORS middleware with our options at the very top.
+app.use(cors(corsOptions));
+// ------------------------------------------------------------- //
+
 
 app.use(express.json());
 
@@ -33,15 +47,10 @@ const mongoURI = process.env.MONGODB_URI;
 
 mongoose
   .connect(mongoURI, {
-    dbName: "saathidatabase", // Ensure this matches your Atlas DB
+    dbName: "saathidatabase",
   })
-  .then(() => console.log("✅ MongoDB connected successfully to saathidatabase!"))
+  .then(() => console.log("✅ MongoDB connected successfully!"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
-
-// Optional connection event listeners
-mongoose.connection.on("connected", () => console.log("✅ MongoDB connection is OPEN"));
-mongoose.connection.on("error", (err) => console.error("❌ MongoDB connection error:", err));
-mongoose.connection.on("disconnected", () => console.log("⚠️ MongoDB disconnected"));
 
 // ------------------ API Routes ------------------ //
 app.use("/api/appointments", appointmentRoutes);
