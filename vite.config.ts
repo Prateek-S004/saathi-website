@@ -7,7 +7,9 @@ export default defineConfig(({ mode }) => ({
   // Local dev server config
   server: {
     host: "::",
-    port: 8080,
+    port: 5000,
+    // ✅ FIX: Moved allowedHosts here to apply to the dev server
+    allowedHosts: ["saathi-website.onrender.com"],
   },
 
   // Plugins
@@ -20,13 +22,14 @@ export default defineConfig(({ mode }) => ({
     },
   },
 
-  // Build output (Vercel will serve this)
+  // Build output
   build: {
-    outDir: "dist", // default for Vercel
+    outDir: "dist",
   },
 
-  // Preview server (local preview after build)
+  // Preview server (settings for `vite preview` command)
   preview: {
+    // This setting can be removed if you're not using the preview command
     allowedHosts: ["saathi-website.onrender.com"],
   },
 }));
