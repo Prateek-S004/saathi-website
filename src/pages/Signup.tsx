@@ -15,14 +15,15 @@ const Signup: React.FC = () => {
     setError("");
 
     try {
-      await axios.post("https://saathi-website-production.up.railway.app/api/auth/signup", {
+      // ✅ THE FIX: Pointing to your correct backend server on Render.
+      await axios.post("https://saathi.onrender.com/api/auth/signup", {
         username,
         password,
         role,
       });
       navigate("/login");
     } catch (err: any) {
-      setError(err.response?.data?.error || "Signup failed");
+      setError(err.response?.data?.message || "Signup failed");
     }
   };
 
