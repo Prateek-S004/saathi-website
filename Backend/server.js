@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 5000;
 // Allow only your Vercel frontend to access this backend
 app.use(
   cors({
-    origin: 'https://saathi-website-blue.vercel.app', // Replace with your Vercel frontend URL
+    origin: 'https://saathi-website.onrender.com', // Replace with your Vercel frontend URL
     credentials: true, // Allow cookies and authentication headers
   })
 );
